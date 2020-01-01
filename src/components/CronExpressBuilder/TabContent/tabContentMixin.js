@@ -5,7 +5,7 @@ export default {
         this.triggerNewVal();
     },
     watch: {
-        type (newVal) {
+        type () {
             this.triggerNewVal();
         },
         everyOption: {
@@ -15,6 +15,20 @@ export default {
             }
         },
         specific: {
+            deep: true,
+            handler() {
+                this.triggerNewVal();
+            }
+        },
+
+        // for day
+        specificDayOfWeek: {
+            deep: true,
+            handler() {
+                this.triggerNewVal();
+            }
+        },
+        specificDayOfMonth: {
             deep: true,
             handler() {
                 this.triggerNewVal();

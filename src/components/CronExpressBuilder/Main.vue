@@ -1,6 +1,6 @@
 <template>
 <div>
-    <el-tabs type="border-card" value="min">
+    <el-tabs type="border-card" value="month">
       <el-tab-pane name="min">
         <span slot="label">
           <i class="el-icon-date"></i> Minutes
@@ -15,16 +15,30 @@
         <HourContent  v-model="hour"  />
       </el-tab-pane>
       
-      <el-tab-pane label="Role">Role</el-tab-pane>
-      <el-tab-pane label="Task">Task</el-tab-pane>
+      <el-tab-pane name="day">
+        <span slot="label">
+          <i class="el-icon-date"></i> Day
+        </span>
+        <DayContent  v-model="day"  />
+      </el-tab-pane>
+
+      <el-tab-pane name="month">
+        <span slot="label">
+          <i class="el-icon-date"></i> Months
+        </span>
+        <MonthContent v-model="month"  />
+      </el-tab-pane>
     </el-tabs>
 
-    <div>{{minute}}</div>
+    <!-- <div>{{minute}}</div>
     <div>{{hour}}</div>
+    <div>{{day}}</div>
+    <div>{{month}}</div> -->
+
     <div class="expresion-wrapper">
-      Expression: {{ expresion }} 
+      <strong>Expression</strong>: {{ expresion }} 
       <br/>
-      {{ expressionDescription }}
+      <strong>Description</strong>: {{ expressionDescription }}
     </div>
 </div>
 </template>
@@ -48,6 +62,8 @@ export default {
           expresion: '* * * * *',
           minute: {},
           hour: {},
+          day: {},
+          month: {},
       }
   },
   computed: {
@@ -69,6 +85,20 @@ export default {
         this.expresion = CronExpBuilder.build();
       }, 
       deep: true,
+    },
+    day: {
+      handler() {
+        CronExpBuilder.setDay(toRawObject(this.day));
+        this.expresion = CronExpBuilder.build();
+      }, 
+      deep: true,
+    },
+    month: {
+      handler() {
+        CronExpBuilder.setMonth(toRawObject(this.month));
+        this.expresion = CronExpBuilder.build();
+      }, 
+      deep: true,
     }
   }
 
@@ -82,6 +112,6 @@ export default {
     border: 4%;
 }
 .option-wrapper {
-    height: 40px;
+    min-height: 40px;
 }
 </style>
